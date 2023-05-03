@@ -1,0 +1,161 @@
+TITULO: Práctica 4 de Algoritmos
+GRUPO: 3.2
+FECHA: 24/11/2022
+***********************************************************
+
+La práctica fue llevada a cabo con este equipo:
+
+Máquina: ROG Strix G512LV-HN221
+CPU:     Intel® Core™ i7-10870H CPU @ 2.20GHz × 16
+RAM:     16,0 GiB @3200MHz
+OS:      LINUX Ubuntu 22.04.1 LTS
+Kernel:  5.15.0-47-generic
+
+En esta práctica, se pide estudiar la complijidad computacional de las operaciones
+de creación de montículo y ordenacion por monticulos.
+Para ello, inicialmente procedemos a implementar las funciones que se solicitan
+en el enunciado de la práctica. Una vez estas están implementadas, deberemos validar
+el correcto funcionamiento de las mismas.
+
+----------------------------------------------------------------
+[ -12  -11  -10  -9  -8  -7  -6  -5  -4  -3  -2  -1  0  1  2  3  4  5  6  7  8  9  10  11  12 ]
+[ 12  10  11  6  9  0  2  4  5  8  -2  -1  -12  1  -6  3  -5  -9  -4  7  -3  -8  -11  -7  -10 ]
+[ 11  10  2  6  9  0  1  4  5  8  -2  -1  -12  -10  -6  3  -5  -9  -4  7  -3  -8  -11  -7 ]
+----------------------------------------------------------------
+
+Anteriormente, se comprueba que, tanto la operacion de crear montículo como la de eliminar máximo
+funcionan correctamente; esto es, dado un vector ordenado ascendentemente, nos devuelve un
+montículo de máximos formado por los elementos del mismo. Si ejecutamos la operación eliminar máximo
+sobre dicho montículo, obtenemos correctamente un montículo de máximos sin el "12" (antiguo máximo)
+(Estas operaciones han sido comprobadas a mano para asegurarse de que devuelven el resultado correcto)
+
+Comprobado lo anterior, procederemos al estudio de la complejidad de la operación crear montículo:
+
+Los tiempos han sido tomados en microsegundos (μs).
+
+El asterico (*) situado a la izquierda de algunos valores determina
+que su tiempo de ejecución medido es menor que 500μs, por lo que se repite
+en bucle 1000 veces y se halla la media aritmetica del tiempo medido.
+
+----------------------------------------------------------------
+Creación de montículo de n elementos
+	n		t(n)	      t(n)/n^0.8	   t(n)/n^0.99	      t(n)/n^1.2	    t(n)/n
+(*)    500             5.120           0.0354890             0.0108966         0.0029546         0.0102400
+(*)   1000             9.661           0.0384611             0.0103519         0.0024267         0.0096610
+(*)   2000            19.102           0.0436772             0.0103053         0.0020885         0.0095510
+(*)   4000            37.805           0.0496479             0.0102686         0.0017992         0.0094512
+(*)   8000            77.075           0.0581355             0.0105403         0.0015966         0.0096344
+(*)  16000           152.367           0.0660078             0.0104909         0.0013739         0.0095229
+(*)  32000           303.155           0.0754301             0.0105091         0.0011898         0.0094736
+     64000           608.000           0.0868880             0.0106117         0.0010387         0.0095000
+    128000          1203.000           0.0987410             0.0105713         0.0008946         0.0093984
+    256000          2440.000           0.1150265             0.0107952         0.0007898         0.0095312
+    512000          5081.000           0.1375730             0.0113181         0.0007159         0.0099238
+							     cte=0.010
+Cota subestimada: n^0.8
+Cota ajustada: n^0.99
+Cota sobreestimada: n^1.2
+
+Conclusión: t(n) = O(n^0.99)
+----------------------------------------------------------------
+
+A pesar de que la Cota teórica tiene una complejidad de O(n), a nosotros esta nos ha resultado
+ligeramente sobreestimada, por ese motivo, hemos seleccionado n^0.99 como nuestra cota ajustada 
+
+A continuación, se nos pide estudiar la complejidad computacional de la operación ordenar
+montículo. En concreto, se nos pide hacer el estudio para 3 casos: la ordenación de vectores
+ordenados ascendentemente, descendentemente y aleatoriamente.
+
+Para ello, al igual que para la operación anterior, se nos pide inicialmente comprobar el corercto
+funcionamiento del algoritmo de ordenación por montículos:
+
+----------------------------------------------------------------
+Vector ordenado descendentemente:
+[ 12  11  10  9  8  7  6  5  4  3  2  1  0  -1  -2  -3  -4  -5  -6  -7  -8  -9  -10  -11  -12 ]
+Vector ordenado mediante Ordenacion por monticulos
+[ -12  -11  -10  -9  -8  -7  -6  -5  -4  -3  -2  -1  0  1  2  3  4  5  6  7  8  9  10  11  12 ]
+----------------------------------------------------------------
+
+Con esto, el correcto funcionamiento de la operación solicitada queda probado
+
+Ahora, procederemos a realizar el estudio de las 3 casuísticas mencionadas anteriormente:
+
+----------------------------------------------------------------
+Ascendente
+
+	n		t(n)	      t(n)/n^0.8	  t(n)/n*log(n)	      t(n)/n^1.2
+(*)    500            39.830           0.2760796             0.0128182         0.0229851
+(*)   1000            93.635           0.3727676             0.0135551         0.0235200
+(*)   2000           210.479           0.4812656             0.0138457         0.0230130
+(*)   4000           450.346           0.5914231             0.0135744         0.0214326
+      8000           945.000           0.7127871             0.0131437         0.0195760
+     16000          1990.000           0.8620989             0.0128482         0.0179436
+     32000          4172.000           1.0380644             0.0125681         0.0163744
+     64000          8742.000           1.2493002             0.0123428         0.0149346
+    128000         18258.000           1.4985983             0.0121295         0.0135769
+    256000         37927.000           1.7879547             0.0118970         0.0122761
+    512000         78657.000           2.1297146             0.0116861         0.0110819
+							     cte=0.012
+Cota subestimada: n^0.8
+Cota ajustada: n*log(n)
+Cota sobreestimada: n^1.2
+
+Conclusión: t(n) = O(n*log(n))
+----------------------------------------------------------------
+
+----------------------------------------------------------------
+Descendente
+
+	n		t(n)	      t(n)/n^0.8	  t(n)/n*log(n)	      t(n)/n^1.2
+(*)    500            36.248           0.2512511             0.0116654         0.0209180
+(*)   1000            89.048           0.3545065             0.0128910         0.0223678
+(*)   2000           205.506           0.4698947             0.0135185         0.0224692
+(*)   4000           448.616           0.5891512             0.0135222         0.0213502
+      8000           925.000           0.6977016             0.0128655         0.0191617
+     16000          1955.000           0.8469364             0.0126222         0.0176280
+     32000          4100.000           1.0201496             0.0123512         0.0160918
+     64000          8623.000           1.2322942             0.0121748         0.0147313
+    128000         18122.000           1.4874355             0.0120392         0.0134758
+    256000         37670.000           1.7758392             0.0118164         0.0121929
+    512000         78455.000           2.1242453             0.0116561         0.0110534
+							     cte=0.012
+Cota subestimada: n^0.8
+Cota ajustada: n*log(n)
+Cota sobreestimada: n^1.2
+
+Conclusión: t(n) = O(n*log(n))
+----------------------------------------------------------------
+
+----------------------------------------------------------------
+Aleatorio
+
+	n		t(n)	      t(n)/n^0.8	  t(n)/n*log(n)	      t(n)/n^1.2
+(*)    500            57.233           0.3967076             0.0184189         0.0330280
+(*)   1000           123.552           0.4918694             0.0178860         0.0310349
+(*)   2000           264.650           0.6051289             0.0174091         0.0289358
+      4000           567.000           0.7446206             0.0170906         0.0269843
+      8000          1211.000           0.9134234             0.0168434         0.0250863
+     16000          2600.000           1.1263604             0.0167866         0.0234439
+     32000          5571.000           1.3861594             0.0167826         0.0218652
+     64000         11928.000           1.7046046             0.0168412         0.0203775
+    128000         25720.000           2.1110717             0.0170868         0.0191258
+    256000         55644.000           2.6231696             0.0174545         0.0180107
+    512000        123090.000           3.3327812             0.0182876         0.0173420
+							     cte=0.017
+Cota subestimada: n^0.8
+Cota ajustada: n*log(n)
+Cota sobreestimada: n^1.2
+
+Conclusión: t(n) = O(n*log(n))
+----------------------------------------------------------------
+
+En este caso, la cota teórica sí nos da ajustada, teniendo una complejidad de O(n*log)
+
+Como podemos observar, tanto la ordenación de un vector ordenado ascendentemente como
+la de uno ordenado descendentemente, tienen tiempos de ejecución similares; sin embargo,
+la diferencia en tiempos de ejecución se aprecia más en la ordenación de un vector ordenado
+aleatoriamente.
+
+También cabe mencionar el hecho de que, para los 3 casos, al contrario que los algoritmos
+que hemos estudiado hasta ahora (inserción y quick_sort), la complejidad computacional no varía.
+Siendo esta, por ejemplo, mejor que en el peor caso de inserción O(n^2)
