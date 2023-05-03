@@ -1,0 +1,130 @@
+TITULO: Práctica 1 de Algoritmos
+
+GRUPO: 3.2
+FECHA: 20/09/2022
+***********************************************************
+
+Esta práctica consiste en comparar 3 algoritmos,
+los cuales se implementan para obtener la sucesión
+de Fibonacci.
+
+La práctica fue llevada a cabo con este equipo:
+
+Máquina: ROG Strix G512LV-HN221
+CPU:     Intel® Core™ i7-10870H CPU @ 2.20GHz × 16
+RAM:     16,0 GiB @3200MHz
+OS:      LINUX Ubuntu 22.04.1 LTS
+Kernel:  5.15.0-47-generic
+
+
+Los tiempos han sido tomados en microsegundos (μs).
+
+En el primer test se comprobó que los tres
+algoritmos propuestos proporcionasen un correcto resultado.
+
+El resultado obtenido fue este:
+
+
+  n    fibonacci_1   fibonacci_2   fibonacci_3
+  0        0              0             0
+  1        1              1             1
+  2        1              1             1
+  3        2              2             2
+  4        3              3             3
+  5        5              5             5
+  6        8              8             8
+  7       13             13            13
+  8       21             21            21
+  9       34             34            34
+ 10       55             55            55
+
+Con estos resultados podemos confirmar que los tres algoritmos
+funcionan correctamente. Así, tanto el ejercicio uno como el
+ejercicio dos quedarían completados, puesto que los algoritmos
+quedan implementados en el lenguaje C y se comprueban
+las diferentes respuestas de los mismos.
+
+En el ejercicio tres y cuatro comparamos los tiempos de ejecución
+de los diferentes algoritmos con 2, 4, 8, 16 y 32 para fib1 y con
+1.000, 10.000, 100.000, 1.000.000 y 10.000.000 para fib2 y fib3.
+
+
+El asterico (*) situado a la izquierda de algunos valores determina
+que su tiempo de ejecución medido es menor que 500μs, por lo que se repite
+en buble 10000 veces y se halla la media aritmetica del tiempo medido.
+
+
+
+Fibonacci 1
+                n               t(n)    t(n)/1.1^n     t(n)/1.61^n        t(n)/2^n
+(*)             2              0.020      0.016281        0.007600        0.004925
+(*)             4              0.031      0.021105        0.004599        0.001931
+(*)             8              0.160      0.074408        0.003533        0.000623
+(*)            16              7.059      1.536201        0.003464        0.000108
+               32          15293.000    724.313782        0.003682        0.000004
+               
+Cota subestimada:  1.1^n
+Cota sobrestimada: 2^n
+Cota ajustada:     1.61^n
+
+
+Se puede obsevar un valor creciente en la cota subestimada,
+algo opuesto en la cota sobrestimada, donde el valor tiende
+a decrecer. En la cota ajustada, sin embargo, el valor se
+acerca a 0,0035; relativamente estable.
+
+
+Tabla sobre algoritmo Fib2:
+  
+Fibonacci 2
+                n               t(n)    t(n)/n^0.8          t(n)/n     t(n)/n*log(n)
+(*)          1000              2.844      0.011321        0.002844        0.000412
+(*)         10000             27.505      0.017355        0.002751        0.000299
+(*)        100000            272.022      0.027202        0.002720        0.000236
+          1000000           2747.000      0.043537        0.002747        0.000199
+         10000000          27616.000      0.069368        0.002762        0.000171
+
+Cota subestimada:  n^0.8
+Cota sobrestimada: n*log(n)
+Cota ajustada:     n
+  
+  
+Se puede obsevar un valor creciente en la cota subestimada,
+algo opuesto en la cota sobrestimada, donde el valor tiende
+a decrecer. En la cota ajustada, se mantiene un valor estable
+de 0,0027.
+ 
+ 
+Tabla sobre algoritmo Fib3: 
+
+Fibonacci 3
+                n               t(n)   t(n)/sq(log n)    t(n)/log(n)    t(n)/n^0.5
+(*)          1000              0.056      0.021155        0.008049        0.001758
+(*)         10000              0.065      0.021418        0.007057        0.000650
+(*)        100000              0.076      0.022399        0.006601        0.000240
+(*)       1000000              0.087      0.023514        0.006326        0.000087
+(*)      10000000              0.100      0.024908        0.006204        0.000032
+
+Cota subestimada:  sq(log n)
+Cota sobrestimada: n^0.5
+Cota ajustada:     log(n)
+
+
+Se puede obsevar un valor creciente en la cota subestimada,
+algo opuesto en la cota sobrestimada, donde el valor tiende
+a decrecer. En la cota ajustada, se mantiene un valor estable
+cercano a 0,0064.
+
+Con estos datos podemos concluir que la complejidad computacional
+de Fib1 es n^1,61; Fib2 es n y Fib3 es log(n). El menor sería
+log (n), por lo que Fib3 sería la mejor opción algorítmica.
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
